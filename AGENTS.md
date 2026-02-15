@@ -40,6 +40,9 @@ go build ./cmd/tabby    # Build
 go test ./...           # Run all tests
 go vet ./...            # Static analysis
 go run ./cmd/tabby      # Run server (default localhost:8080)
+
+docker build -t tabby .              # Build Docker image
+docker run -p 8080:8080 tabby        # Run in container
 ```
 
 ## Configuration

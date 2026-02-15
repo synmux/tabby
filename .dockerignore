@@ -1,0 +1,5 @@
+.git
+tabby
+tabby.toml
+tabby-cache.db*
+*.pem

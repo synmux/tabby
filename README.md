@@ -59,6 +59,46 @@ Scheduler (per-widget ticker)
 | POST | `/api/widgets/{name}/refresh` | Force refresh |
 | GET | `/api/health` | Health check |
 
+## Docker
+
+Build the image:
+
+```bash
+docker build -t tabby .
+```
+
+Run with defaults:
+
+```bash
+docker run -p 8080:8080 tabby
+```
+
+Run with a custom configuration:
+
+```bash
+docker run -p 8080:8080 \
+  -v ./tabby.toml:/etc/tabby/tabby.toml:ro \
+  tabby
+```
+
+Persist the cache across restarts:
+
+```bash
+docker run -p 8080:8080 \
+  -v ./tabby.toml:/etc/tabby/tabby.toml:ro \
+  -v tabby-cache:/var/lib/tabby/ \
+  tabby
+```
+
+> **Important:** Your `tabby.toml` must set `host = "0.0.0.0"` under `[server]` when running inside Docker. The default `localhost` binds only to the container's loopback interface and will not be reachable from the host.
+
+When using the cache volume, set `database_path` in your config:
+
+```toml
+[cache]
+database_path = "/var/lib/tabby/tabby-cache.db"
+```
+
 ## Development
 
 ```bash
