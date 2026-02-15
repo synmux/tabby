@@ -70,14 +70,14 @@ func DefaultConfig() Config {
 			Port: 8080,
 		},
 		Widgets: map[string]WidgetConfig{
-			"weather":  {RefreshInterval: Duration{5 * time.Minute}},
-			"rss":      {RefreshInterval: Duration{10 * time.Minute}},
-			"uptime":   {RefreshInterval: Duration{30 * time.Second}},
-			"github":   {RefreshInterval: Duration{2 * time.Minute}},
-			"linear":   {RefreshInterval: Duration{2 * time.Minute}},
-			"notion":   {RefreshInterval: Duration{3 * time.Minute}},
-			"omi":      {RefreshInterval: Duration{5 * time.Minute}},
-			"calendar": {RefreshInterval: Duration{1 * time.Minute}},
+			"weather":  {RefreshInterval: Duration{5 * time.Second}},
+			"rss":      {RefreshInterval: Duration{5 * time.Second}},
+			"uptime":   {RefreshInterval: Duration{5 * time.Second}},
+			"github":   {RefreshInterval: Duration{5 * time.Second}},
+			"linear":   {RefreshInterval: Duration{5 * time.Second}},
+			"notion":   {RefreshInterval: Duration{5 * time.Second}},
+			"omi":      {RefreshInterval: Duration{5 * time.Second}},
+			"calendar": {RefreshInterval: Duration{5 * time.Second}},
 		},
 	}
 }

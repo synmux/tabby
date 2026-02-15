@@ -11,7 +11,7 @@ import (
 
 func TestLinearWidget(t *testing.T) {
 	cfg := config.WidgetConfig{
-		RefreshInterval: config.Duration{Duration: 2 * time.Minute},
+		RefreshInterval: config.Duration{Duration: 5 * time.Second},
 	}
 	widget := New(cfg)
 

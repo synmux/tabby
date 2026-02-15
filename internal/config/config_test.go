@@ -22,6 +22,9 @@ func TestDefaultConfig(t *testing.T) {
 	if len(cfg.Widgets) != 8 {
 		t.Errorf("expected 8 default widgets, got %d", len(cfg.Widgets))
 	}
+	if cfg.Widgets["weather"].RefreshInterval.Duration != 5*time.Second {
+		t.Errorf("expected weather default 5s, got %v", cfg.Widgets["weather"].RefreshInterval.Duration)
+	}
 }
 
 func TestLoadMissingFile(t *testing.T) {

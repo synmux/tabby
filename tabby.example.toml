@@ -13,43 +13,43 @@ port = 8080
 
 [widgets.weather]
 enabled = true
-refresh_interval = "5m"
+refresh_interval = "5s"
 # settings.latitude = "51.5074"
 # settings.longitude = "-0.1278"
 
 [widgets.rss]
 enabled = true
-refresh_interval = "10m"
+refresh_interval = "5s"
 # settings.feeds = "https://hnrss.org/frontpage,https://feeds.arstechnica.com/arstechnica/index"
 
 [widgets.uptime]
 enabled = true
-refresh_interval = "30s"
+refresh_interval = "5s"
 # settings.targets = "https://example.com,https://api.example.com"
 
 [widgets.github]
 enabled = true
-refresh_interval = "2m"
+refresh_interval = "5s"
 # settings.token = ""
 # settings.repos = "owner/repo1,owner/repo2"
 
 [widgets.linear]
 enabled = true
-refresh_interval = "2m"
+refresh_interval = "5s"
 # settings.api_key = ""
 # settings.team = ""
 
 [widgets.notion]
 enabled = true
-refresh_interval = "3m"
+refresh_interval = "5s"
 # settings.token = ""
 
 [widgets.omi]
 enabled = true
-refresh_interval = "5m"
+refresh_interval = "5s"
 # settings.api_key = ""
 
 [widgets.calendar]
 enabled = true
-refresh_interval = "1m"
+refresh_interval = "5s"
 # settings.calendar_url = ""

@@ -11,7 +11,7 @@ import (
 
 func TestCalendarWidget(t *testing.T) {
 	cfg := config.WidgetConfig{
-		RefreshInterval: config.Duration{Duration: time.Minute},
+		RefreshInterval: config.Duration{Duration: 5 * time.Second},
 	}
 	widget := New(cfg)
 

@@ -11,7 +11,7 @@ import (
 
 func TestNotionWidget(t *testing.T) {
 	cfg := config.WidgetConfig{
-		RefreshInterval: config.Duration{Duration: 3 * time.Minute},
+		RefreshInterval: config.Duration{Duration: 5 * time.Second},
 	}
 	widget := New(cfg)
 

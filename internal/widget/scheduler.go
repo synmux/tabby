@@ -4,12 +4,36 @@ import (
 	"context"
 	"html/template"
 	"log/slog"
+	"math/rand/v2"
 	"strings"
 	"time"
 
 	"tabby/internal/cache"
 	"tabby/internal/sse"
 )
+
+const (
+	// jitterFraction is the ±percentage applied to base intervals.
+	// 0.4 gives a uniform range of [base*0.6, base*1.4].
+	jitterFraction = 0.4
+
+	// minJitteredInterval prevents jitter from producing dangerously
+	// small intervals (e.g. when a base is close to zero).
+	minJitteredInterval = 500 * time.Millisecond
+)
+
+// jitteredDuration returns a uniformly random duration in the range
+// [base*(1-jitterFraction), base*(1+jitterFraction)], clamped to
+// minJitteredInterval.
+func jitteredDuration(base time.Duration) time.Duration {
+	low := float64(base) * (1.0 - jitterFraction)
+	high := float64(base) * (1.0 + jitterFraction)
+	jittered := time.Duration(low + rand.Float64()*(high-low))
+	if jittered < minJitteredInterval {
+		return minJitteredInterval
+	}
+	return jittered
+}
 
 // Scheduler manages per-widget refresh tickers and orchestrates the
 // fetch → cache → broadcast pipeline.
@@ -46,7 +70,7 @@ func (s *Scheduler) Start(parentCtx context.Context) {
 		if !widget.Enabled() {
 			continue
 		}
-		go s.runWidgetTicker(ctx, widget)
+		go s.runWidgetTimerLoop(ctx, widget)
 	}
 }
 
@@ -86,20 +110,27 @@ func (s *Scheduler) fetchAndBroadcastAll(ctx context.Context) {
 	}
 }
 
-func (s *Scheduler) runWidgetTicker(ctx context.Context, widget Widget) {
-	ticker := time.NewTicker(widget.RefreshInterval())
-	defer ticker.Stop()
+func (s *Scheduler) runWidgetTimerLoop(ctx context.Context, widget Widget) {
+	baseInterval := widget.RefreshInterval()
 
-	slog.Info("widget ticker started",
+	slog.Info("widget timer loop started",
 		"widget", widget.Name(),
-		"interval", widget.RefreshInterval().String(),
+		"base_interval", baseInterval.String(),
 	)
 
 	for {
+		delay := jitteredDuration(baseInterval)
+		slog.Debug("widget timer scheduled",
+			"widget", widget.Name(),
+			"delay", delay.String(),
+		)
+
+		timer := time.NewTimer(delay)
 		select {
 		case <-ctx.Done():
+			timer.Stop()
 			return
-		case <-ticker.C:
+		case <-timer.C:
 			data, err := widget.Fetch(ctx)
 			if err != nil {
 				slog.Warn("widget fetch failed",

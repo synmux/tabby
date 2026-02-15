@@ -10,7 +10,7 @@ import (
 
 func TestWeatherWidget(t *testing.T) {
 	cfg := config.WidgetConfig{
-		RefreshInterval: config.Duration{Duration: 5 * time.Minute},
+		RefreshInterval: config.Duration{Duration: 5 * time.Second},
 	}
 	widget := New(cfg)
 
@@ -20,8 +20,8 @@ func TestWeatherWidget(t *testing.T) {
 	if !widget.Enabled() {
 		t.Error("expected widget to be enabled by default")
 	}
-	if widget.RefreshInterval() != 5*time.Minute {
-		t.Errorf("expected 5m refresh, got %v", widget.RefreshInterval())
+	if widget.RefreshInterval() != 5*time.Second {
+		t.Errorf("expected 5s refresh, got %v", widget.RefreshInterval())
 	}
 
 	data, err := widget.Fetch(context.Background())
@@ -41,7 +41,7 @@ func TestWeatherWidget(t *testing.T) {
 
 func TestWeatherWidgetDynamicData(t *testing.T) {
 	cfg := config.WidgetConfig{
-		RefreshInterval: config.Duration{Duration: time.Minute},
+		RefreshInterval: config.Duration{Duration: 5 * time.Second},
 	}
 	widget := New(cfg)
 

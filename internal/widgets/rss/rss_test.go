@@ -11,7 +11,7 @@ import (
 
 func TestRSSWidget(t *testing.T) {
 	cfg := config.WidgetConfig{
-		RefreshInterval: config.Duration{Duration: 10 * time.Minute},
+		RefreshInterval: config.Duration{Duration: 5 * time.Second},
 	}
 	widget := New(cfg)
 
