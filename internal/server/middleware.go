@@ -8,6 +8,7 @@ import (
 )
 
 // responseCapture wraps http.ResponseWriter to capture the status code.
+// It also implements http.Flusher to preserve SSE streaming support.
 type responseCapture struct {
 	http.ResponseWriter
 	statusCode int
@@ -16,6 +17,14 @@ type responseCapture struct {
 func (rc *responseCapture) WriteHeader(code int) {
 	rc.statusCode = code
 	rc.ResponseWriter.WriteHeader(code)
+}
+
+// Flush delegates to the underlying writer's Flush method if it implements
+// http.Flusher. This is required for SSE streaming through the logging middleware.
+func (rc *responseCapture) Flush() {
+	if flusher, ok := rc.ResponseWriter.(http.Flusher); ok {
+		flusher.Flush()
+	}
 }
 
 // LoggingMiddleware logs each HTTP request with method, path, status, and duration.

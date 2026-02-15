@@ -51,3 +51,55 @@ func TestResponseCapture(t *testing.T) {
 		t.Errorf("expected 404, got %d", recorder.Code)
 	}
 }
+
+func TestResponseCaptureImplementsFlusher(t *testing.T) {
+	recorder := httptest.NewRecorder()
+	capture := &responseCapture{ResponseWriter: recorder, statusCode: http.StatusOK}
+
+	flusher, ok := any(capture).(http.Flusher)
+	if !ok {
+		t.Fatal("responseCapture does not implement http.Flusher")
+	}
+
+	// Should delegate to the recorder's Flush without panicking.
+	flusher.Flush()
+
+	if !recorder.Flushed {
+		t.Error("expected underlying recorder to be flushed")
+	}
+}
+
+func TestFlusherPreservedThroughMiddleware(t *testing.T) {
+	flusherAvailable := false
+
+	handler := LoggingMiddleware(http.HandlerFunc(func(writer http.ResponseWriter, _ *http.Request) {
+		_, flusherAvailable = writer.(http.Flusher)
+		writer.WriteHeader(http.StatusOK)
+	}))
+
+	recorder := httptest.NewRecorder()
+	request := httptest.NewRequest(http.MethodGet, "/sse", nil)
+	handler.ServeHTTP(recorder, request)
+
+	if !flusherAvailable {
+		t.Error("http.Flusher not available inside handler wrapped by LoggingMiddleware")
+	}
+}
+
+// nonFlushableWriter is a minimal http.ResponseWriter that does not implement http.Flusher.
+type nonFlushableWriter struct {
+	header     http.Header
+	statusCode int
+}
+
+func (writer *nonFlushableWriter) Header() http.Header         { return writer.header }
+func (writer *nonFlushableWriter) Write(bytes []byte) (int, error) { return len(bytes), nil }
+func (writer *nonFlushableWriter) WriteHeader(code int)        { writer.statusCode = code }
+
+func TestFlushWithNonFlushableWriter(t *testing.T) {
+	underlying := &nonFlushableWriter{header: make(http.Header)}
+	capture := &responseCapture{ResponseWriter: underlying, statusCode: http.StatusOK}
+
+	// Flush must not panic when the underlying writer lacks http.Flusher.
+	capture.Flush()
+}
