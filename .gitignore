@@ -1,0 +1,24 @@
+# Build output
+tabby
+
+# Runtime artefacts
+tabby-cache.db
+tabby-cache.db-wal
+tabby-cache.db-shm
+
+# Configuration (may contain secrets)
+tabby.toml
+
+# TLS certificates
+*.pem
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~

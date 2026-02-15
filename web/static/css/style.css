@@ -1,0 +1,417 @@
+/* Tabby — New Tab Page Dashboard */
+
+:root {
+  --bg-primary: #0f0f14;
+  --bg-card: #1a1a24;
+  --bg-card-hover: #22222e;
+  --border-card: #2a2a3a;
+  --border-accent: #4a4a6a;
+  --text-primary: #e8e8f0;
+  --text-secondary: #9090a8;
+  --text-muted: #606078;
+  --accent: #7c6ef0;
+  --accent-dim: #5a4ec0;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #f87171;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+  --radius: 12px;
+  --gap: 16px;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  padding: var(--gap);
+}
+
+/* ── Header ── */
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4px 16px;
+}
+
+.dashboard-header h1 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+}
+
+.clock {
+  font-family: var(--font-mono);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.clock-date {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-align: right;
+  margin-top: 2px;
+}
+
+/* ── Bento Grid ── */
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ── Cards ── */
+
+.widget-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  overflow: hidden;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+}
+
+.widget-card:hover {
+  border-color: var(--border-accent);
+  background: var(--bg-card-hover);
+}
+
+.widget-card--wide {
+  grid-column: span 2;
+}
+
+.widget-card--tall {
+  grid-row: span 2;
+}
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-shrink: 0;
+}
+
+.widget-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.widget-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.widget-indicator--active {
+  opacity: 1;
+  animation: pulse-dot 1s ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+.widget-body {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Widget: Weather ── */
+
+.weather-current {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.weather-temp {
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.weather-condition {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.weather-detail {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ── Widget: RSS ── */
+
+.rss-item {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-card);
+}
+
+.rss-item:last-child {
+  border-bottom: none;
+}
+
+.rss-item-title {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.rss-item-meta {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+/* ── Widget: Uptime ── */
+
+.uptime-service {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.uptime-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.uptime-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+}
+
+.uptime-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.uptime-dot--healthy { background: var(--success); }
+.uptime-dot--degraded { background: var(--warning); }
+.uptime-dot--down { background: var(--danger); }
+
+/* ── Widget: GitHub ── */
+
+.github-item {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-card);
+}
+
+.github-item:last-child {
+  border-bottom: none;
+}
+
+.github-item-title {
+  font-size: 0.83rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.github-item-meta {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+  font-family: var(--font-mono);
+}
+
+.github-branch {
+  color: var(--accent);
+}
+
+/* ── Widget: Linear ── */
+
+.linear-ticket {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 0;
+}
+
+.linear-status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.linear-status-dot--todo { background: var(--text-muted); }
+.linear-status-dot--progress { background: var(--accent); }
+.linear-status-dot--done { background: var(--success); }
+
+.linear-ticket-id {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.linear-ticket-title {
+  font-size: 0.83rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Widget: Notion ── */
+
+.notion-page {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-card);
+}
+
+.notion-page:last-child {
+  border-bottom: none;
+}
+
+.notion-page-title {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.notion-page-meta {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ── Widget: OMI ── */
+
+.omi-memory {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-card);
+}
+
+.omi-memory:last-child {
+  border-bottom: none;
+}
+
+.omi-memory-text {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  line-height: 1.4;
+  font-style: italic;
+}
+
+.omi-memory-time {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+/* ── Widget: Calendar ── */
+
+.calendar-event {
+  display: flex;
+  gap: 12px;
+  padding: 6px 0;
+  align-items: flex-start;
+}
+
+.calendar-time {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  flex-shrink: 0;
+  min-width: 50px;
+}
+
+.calendar-event-title {
+  font-size: 0.83rem;
+  font-weight: 500;
+}
+
+.calendar-countdown {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ── Widget: Error state ── */
+
+.widget-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 0.8rem;
+  color: var(--danger);
+  opacity: 0.7;
+}
+
+/* ── SSE update flash ── */
+
+.widget-card[data-sse-updated] {
+  animation: card-flash 0.6s ease-out;
+}
+
+@keyframes card-flash {
+  0% { border-color: var(--accent); }
+  100% { border-color: var(--border-card); }
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .widget-card--wide {
+    grid-column: span 1;
+  }
+
+  .clock {
+    font-size: 1.8rem;
+  }
+}

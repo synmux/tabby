@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tabby</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard-header">
+    <h1>tabby</h1>
+    <div>
+      <div id="clock" class="clock">00:00:00</div>
+      <div id="clock-date" class="clock-date"></div>
+    </div>
+  </div>
+
+  <div class="bento-grid" hx-ext="sse" sse-connect="/api/events">
+    {{range .Widgets}}
+    <div class="widget-card {{.CardClass}}" id="widget-{{.Name}}">
+      <div class="widget-header">
+        <span class="widget-title">{{.DisplayName}}</span>
+        <span class="widget-indicator"></span>
+      </div>
+      <div class="widget-body" sse-swap="{{.Name}}" hx-swap="innerHTML">
+        {{.CachedHTML}}
+      </div>
+    </div>
+    {{end}}
+  </div>
+
+  <script src="/static/js/htmx.min.js"></script>
+  <script src="/static/js/sse.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
