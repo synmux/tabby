@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"tabby/internal/config"
-	"tabby/internal/widget"
+	"github.com/daveio/tabby/internal/config"
+	"github.com/daveio/tabby/internal/widget"
 )
 
 var mockTickets = []struct {

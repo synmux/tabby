@@ -10,8 +10,8 @@ import (
 	"net/http"
 	"time"
 
-	"tabby/internal/config"
-	"tabby/web"
+	"github.com/daveio/tabby/internal/config"
+	"github.com/daveio/tabby/web"
 )
 
 // WidgetView holds the data needed to render a widget card in the index template.

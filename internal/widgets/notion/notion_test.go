@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"tabby/internal/config"
+	"github.com/daveio/tabby/internal/config"
 )
 
 func TestNotionWidget(t *testing.T) {

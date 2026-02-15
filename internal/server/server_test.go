@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"tabby/internal/config"
+	"github.com/daveio/tabby/internal/config"
 )
 
 func newTestServer(t *testing.T) *Server {

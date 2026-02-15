@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"tabby/internal/config"
+	"github.com/daveio/tabby/internal/config"
 )
 
 func TestWeatherWidget(t *testing.T) {

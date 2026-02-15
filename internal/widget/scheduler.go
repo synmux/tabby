@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"tabby/internal/cache"
-	"tabby/internal/sse"
+	"github.com/daveio/tabby/internal/cache"
+	"github.com/daveio/tabby/internal/sse"
 )
 
 const (
