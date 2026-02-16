@@ -105,8 +105,7 @@ func TestWidgetConfigDefaults(t *testing.T) {
 	}
 
 	// Explicit false
-	falseBool := false
-	wc.Enabled = &falseBool
+	wc.Enabled = new(false)
 	if wc.IsEnabled() {
 		t.Error("expected explicit false to be disabled")
 	}

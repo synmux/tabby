@@ -95,7 +95,7 @@ func (b *Broker) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 	defer b.removeClient(client)
 
 	// Send initial keepalive comment so the client knows the connection is alive
-	fmt.Fprintf(writer, ": connected\n\n")
+	_, _ = fmt.Fprintf(writer, ": connected\n\n")
 	flusher.Flush()
 
 	ctx := request.Context()
@@ -108,7 +108,7 @@ func (b *Broker) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 			if !ok {
 				return
 			}
-			fmt.Fprintf(writer, "event: %s\ndata: %s\n\n", event.Name, event.Data)
+			_, _ = fmt.Fprintf(writer, "event: %s\ndata: %s\n\n", event.Name, event.Data)
 			flusher.Flush()
 		}
 	}

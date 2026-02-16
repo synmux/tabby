@@ -38,7 +38,7 @@ See `tabby.example.toml` for all available options. The server runs with sensibl
 
 ## Architecture
 
-```
+```plaintext
 Scheduler (per-widget ticker)
   → Widget.Fetch()
   → Render HTML partial
@@ -49,15 +49,15 @@ Scheduler (per-widget ticker)
 
 ### API Endpoints
 
-| Method | Path | Purpose |
-|--------|------|---------|
-| GET | `/` | Main dashboard |
-| GET | `/static/*` | Embedded CSS/JS |
-| GET | `/api/events` | SSE stream |
-| GET | `/api/widgets` | List all widgets |
-| GET | `/api/widgets/{name}` | Single widget data |
-| POST | `/api/widgets/{name}/refresh` | Force refresh |
-| GET | `/api/health` | Health check |
+| Method | Path                          | Purpose            |
+| ------ | ----------------------------- | ------------------ |
+| GET    | `/`                           | Main dashboard     |
+| GET    | `/static/*`                   | Embedded CSS/JS    |
+| GET    | `/api/events`                 | SSE stream         |
+| GET    | `/api/widgets`                | List all widgets   |
+| GET    | `/api/widgets/{name}`         | Single widget data |
+| POST   | `/api/widgets/{name}/refresh` | Force refresh      |
+| GET    | `/api/health`                 | Health check       |
 
 ## Docker
 
@@ -102,6 +102,9 @@ database_path = "/var/lib/tabby/tabby-cache.db"
 ## Development
 
 ```bash
+# Lint
+trunk check -a --show-existing
+
 # Run tests
 go test ./...
 

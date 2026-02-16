@@ -63,7 +63,7 @@ func New(cfg config.WidgetConfig) *Widget {
 	return &Widget{config: cfg}
 }
 
-func (w *Widget) Name() string                  { return "linear" }
+func (w *Widget) Name() string                   { return "linear" }
 func (w *Widget) RefreshInterval() time.Duration { return w.config.RefreshInterval.Duration }
 func (w *Widget) Enabled() bool                  { return w.config.IsEnabled() }
 

@@ -12,8 +12,7 @@ import (
 
 func newTestServer(t *testing.T) *Server {
 	t.Helper()
-	cfg := config.DefaultConfig()
-	return New(&cfg)
+	return New(new(config.DefaultConfig()))
 }
 
 func TestHealthEndpoint(t *testing.T) {

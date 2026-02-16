@@ -15,7 +15,7 @@ Tabby is a Go web server that serves an HTML dashboard as a browser new tab page
 
 ## Project Structure
 
-```
+```plaintext
 cmd/tabby/main.go           — Entry point, wiring
 internal/config/             — TOML config parsing
 internal/server/             — HTTP server, routing, middleware
@@ -36,6 +36,7 @@ web/                         — Embedded static assets + HTML templates
 ## Commands
 
 ```bash
+trunk check -a --show-existing # Lint
 go build ./cmd/tabby    # Build
 go test ./...           # Run all tests
 go vet ./...            # Static analysis

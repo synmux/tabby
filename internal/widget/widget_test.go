@@ -16,8 +16,8 @@ type mockWidget struct {
 	err      error
 }
 
-func (m *mockWidget) Name() string                  { return m.name }
-func (m *mockWidget) Enabled() bool                 { return m.enabled }
+func (m *mockWidget) Name() string                   { return m.name }
+func (m *mockWidget) Enabled() bool                  { return m.enabled }
 func (m *mockWidget) RefreshInterval() time.Duration { return m.interval }
 func (m *mockWidget) Fetch(_ context.Context) (*Data, error) {
 	if m.err != nil {

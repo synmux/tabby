@@ -52,7 +52,7 @@ func New(cfg config.WidgetConfig) *Widget {
 	}
 }
 
-func (w *Widget) Name() string                  { return "weather" }
+func (w *Widget) Name() string                   { return "weather" }
 func (w *Widget) RefreshInterval() time.Duration { return w.config.RefreshInterval.Duration }
 func (w *Widget) Enabled() bool                  { return w.config.IsEnabled() }
 

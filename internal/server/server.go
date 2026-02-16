@@ -115,7 +115,7 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("GET /api/health", s.handleHealth)
 }
 
-func (s *Server) handleIndex(writer http.ResponseWriter, request *http.Request) {
+func (s *Server) handleIndex(writer http.ResponseWriter, _ *http.Request) {
 	widgets := s.buildWidgetViews()
 
 	data := map[string]any{

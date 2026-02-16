@@ -9,7 +9,7 @@ import (
 func TestLoggingMiddleware(t *testing.T) {
 	handler := LoggingMiddleware(http.HandlerFunc(func(writer http.ResponseWriter, _ *http.Request) {
 		writer.WriteHeader(http.StatusOK)
-		writer.Write([]byte("ok"))
+		_, _ = writer.Write([]byte("ok"))
 	}))
 
 	recorder := httptest.NewRecorder()
@@ -92,9 +92,9 @@ type nonFlushableWriter struct {
 	statusCode int
 }
 
-func (writer *nonFlushableWriter) Header() http.Header         { return writer.header }
+func (writer *nonFlushableWriter) Header() http.Header             { return writer.header }
 func (writer *nonFlushableWriter) Write(bytes []byte) (int, error) { return len(bytes), nil }
-func (writer *nonFlushableWriter) WriteHeader(code int)        { writer.statusCode = code }
+func (writer *nonFlushableWriter) WriteHeader(code int)            { writer.statusCode = code }
 
 func TestFlushWithNonFlushableWriter(t *testing.T) {
 	underlying := &nonFlushableWriter{header: make(http.Header)}

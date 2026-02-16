@@ -3,6 +3,7 @@ package cache
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"log/slog"
 	"sync"
@@ -42,7 +43,7 @@ func NewStore(dbPath string) (*Store, error) {
 	}
 	for _, pragma := range pragmas {
 		if _, err := db.Exec(pragma); err != nil {
-			db.Close()
+			_ = db.Close()
 			return nil, fmt.Errorf("setting pragma: %w", err)
 		}
 	}
@@ -58,7 +59,7 @@ func NewStore(dbPath string) (*Store, error) {
 		)
 	`
 	if _, err := db.Exec(createSQL); err != nil {
-		db.Close()
+		_ = db.Close()
 		return nil, fmt.Errorf("creating cache table: %w", err)
 	}
 
@@ -80,7 +81,7 @@ func (s *Store) Get(widgetName string) (*Entry, error) {
 	var entry Entry
 	var fetchedAt, expiresAt string
 	err := row.Scan(&entry.WidgetName, &entry.HTML, &fetchedAt, &expiresAt, &entry.Error)
-	if err == sql.ErrNoRows {
+	if errors.Is(err, sql.ErrNoRows) {
 		return nil, nil
 	}
 	if err != nil {

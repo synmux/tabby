@@ -2,7 +2,7 @@
 # Copy this file to tabby.toml and customise as needed.
 
 [server]
-host = "localhost"  # Use "0.0.0.0" when running inside Docker
+host = "localhost" # Use "0.0.0.0" when running inside Docker
 port = 8080
 # tls = true
 # cert_file = "cert.pem"

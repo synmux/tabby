@@ -11,7 +11,7 @@ func newTestStore(t *testing.T) *Store {
 	if err != nil {
 		t.Fatalf("failed to create test store: %v", err)
 	}
-	t.Cleanup(func() { store.Close() })
+	t.Cleanup(func() { _ = store.Close() })
 	return store
 }
 
@@ -107,6 +107,9 @@ func TestStoreUpsert(t *testing.T) {
 	got, err := store.Get("weather")
 	if err != nil {
 		t.Fatal(err)
+	}
+	if got == nil {
+		t.Fatal("expected entry after upsert, got nil")
 	}
 	if got.HTML != "<div>second</div>" {
 		t.Errorf("expected upserted value, got %q", got.HTML)
