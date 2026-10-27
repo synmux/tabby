@@ -18,6 +18,8 @@ runtimes:
 # This is the section where you manage your linters. (https://docs.trunk.io/check/configuration)
 lint:
   disabled:
+    # Trunk plugins v1.11.0 still pass pinact the single-dash `-format` flag, which pinact 5 rejects.
+    - pinact
     - osv-scanner
   ignore:
     - linters:
@@ -35,7 +37,6 @@ lint:
   enabled:
     - actionlint@1.7.12
     - grype@0.121.0
-    - pinact@5.0.2
     - checkov@3.3.30
     - git-diff-check
     - gofmt@1.26.0
